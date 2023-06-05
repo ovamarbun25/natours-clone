@@ -77,6 +77,7 @@ exports.getAllDocuments = Model =>
       .paginate();
 
     const document = await features.query;
+    // explain() => this function is for telling us the executionStats of a query
 
     res.status(200).json({
       status: 'success',
