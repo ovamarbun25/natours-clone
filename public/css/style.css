@@ -137,7 +137,7 @@ body {
     to(#eb4d4b)
   );
   background-image: linear-gradient(to right, #ff7730, #eb4d4b);
-  font-size: 3.5rem;
+  font-size: 2.5rem;
 }
 
 .heading-primary,
@@ -605,7 +605,7 @@ body {
   grid-column-gap: 6rem;
   grid-auto-flow: column;
   overflow-x: scroll;
-  -ms-scroll-snap-type: x mandatory;
+  /* -ms-scroll-snap-type: x mandatory; */
   scroll-snap-type: x mandatory;
 }
 .reviews__card {
@@ -830,6 +830,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: flex-end;
 }
 .footer__nav li {
   margin-left: 1.5rem;
@@ -1195,7 +1196,7 @@ body {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  max-width: 80rem;
+  max-width: 100%;
   text-align: center;
 }
 .error__title {
@@ -1211,7 +1212,7 @@ body {
   margin-bottom: 1rem;
 }
 .error__emoji {
-  font-size: 3.75rem;
+  font-size: 2.5rem;
   margin-left: 1rem;
 }
 .error__msg {

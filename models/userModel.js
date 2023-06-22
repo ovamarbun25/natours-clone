@@ -15,7 +15,10 @@ const userSchema = mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email']
   },
-  photo: String,
+  photo: { 
+    type: String,
+    default: 'default.jpg'
+   },
   role: {
     type: String,
     enum: ['user', 'guide', 'lead-guide', 'admin'],
@@ -24,10 +27,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Please provide a password'],
-    minlength: [
-      8,
-      'Password length must be greater than or equal to 8 characters!'
-    ],
+    minlength: 8,
     select: false
   },
   passwordConfirm: {
@@ -38,7 +38,7 @@ const userSchema = mongoose.Schema({
       validator: function(el) {
         return el === this.password;
       },
-      message: 'Password are not the same'
+      message: 'Password are not the same!'
     }
   },
   passwordChangedAt: Date,
@@ -56,7 +56,7 @@ userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
 
   //hash password with cost of 12
-  this.password = await bcrypt.hash(this.password, 11);
+  this.password = await bcrypt.hash(this.password, 12);
 
   //delete passwordConfirm field
   this.passwordConfirm = undefined;

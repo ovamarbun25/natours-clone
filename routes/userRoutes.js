@@ -2,10 +2,12 @@ const express = require('express');
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 // const reviewController = require('./../controllers/reviewController');
+
 const router = express.Router();
 
 router.post('/signup', authController.signUp);
 router.post('/login', authController.login);
+router.get('/logout', authController.logout);
 
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
@@ -14,7 +16,12 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 router.use(authController.protect);
 
 router.patch('/updateMyPassword', authController.updatePassword);
-router.patch('/updateMyData', userController.updateMyData);
+router.patch(
+  '/updateMyData',
+  userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
+  userController.updateMyData
+);
 router.delete('/deleteMyData', userController.deleteMyData);
 
 router.get('/me', userController.getMyData, userController.getUser);
