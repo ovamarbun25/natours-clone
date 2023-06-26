@@ -4,7 +4,7 @@ import catchAsync from '../../utils/catchAsync';
 const Stripe = require('stripe');
 
 const stripe = Stripe(
-  'pk_test_51NLLPnKrepZ3WoqW76asiNYghReUbsiBvf4dir5OH8ekuT5jvSmWp2iE3d9V2WqpGTjw1s2uDn7punMcwgub98b900lbUE5eQW'
+  `${process.env.STRIPE_PUBLIC_KEY}`
 );
 
 export const bookTour = async tourId => {
