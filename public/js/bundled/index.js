@@ -198,7 +198,7 @@ if (bookBtn) bookBtn.addEventListener("click", (e)=>{
     (0, _stripe.bookTour)(tourId);
 });
 
-},{"@babel/polyfill":"huWpU","./login":"aUJqG","./updateSettings":"j7xLx","./stripe":"boZ94","./leaflet":"kDEm8"}],"huWpU":[function(require,module,exports) {
+},{"@babel/polyfill":"huWpU","./leaflet":"kDEm8","./login":"aUJqG","./updateSettings":"j7xLx","./stripe":"boZ94"}],"huWpU":[function(require,module,exports) {
 "use strict";
 require("f50de0aa433a589b");
 var _global = _interopRequireDefault(require("4142986752a079d4"));
@@ -7181,6 +7181,75 @@ module.exports = function(it, key) {
     return hasOwnProperty.call(it, key);
 };
 
+},{}],"kDEm8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "displayMap", ()=>displayMap);
+const displayMap = (locations)=>{
+    const map = L.map("map", {
+        center: [
+            51.505,
+            -0.09
+        ],
+        zoom: 13,
+        zoomControl: false,
+        dragging: false
+    });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    const points = [];
+    locations.forEach((loc)=>{
+        points.push([
+            loc.coordinates[1],
+            loc.coordinates[0]
+        ]);
+        L.marker([
+            loc.coordinates[1],
+            loc.coordinates[0]
+        ]).addTo(map).bindPopup(`<p>Day ${loc.day}: ${loc.description}</p>`, {
+            autoClose: false
+        }).on("mouseover", function(e) {
+            this.openPopup();
+        }).on("mouseout", function(e) {
+            this.closePopup();
+        });
+    });
+    const bounds = L.latLngBounds(points).pad(0.5);
+    map.fitBounds(bounds);
+    map.scrollWheelZoom.disable();
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}],"fofuL":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
 },{}],"aUJqG":[function(require,module,exports) {
 /* eslint-disable */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -7222,53 +7291,7 @@ const logout = async ()=>{
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"fofuL","./alert":"8F2M5","axios":"5vw73"}],"fofuL":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"8F2M5":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
-parcelHelpers.export(exports, "showAlert", ()=>showAlert);
-const hideAlert = ()=>{
-    const el = document.querySelector(".alert");
-    if (el) el.parentElement.removeChild(el);
-};
-const showAlert = (type, message)=>{
-    hideAlert();
-    const markup = `<div class="alert alert--${type}">${message}</div>`;
-    document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
-    window.setTimeout(hideAlert, 5000);
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}],"5vw73":[function(require,module,exports) {
+},{"axios":"5vw73","./alert":"8F2M5","@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}],"5vw73":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -11397,6 +11420,22 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
 });
 exports.default = HttpStatusCode;
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}],"8F2M5":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
+parcelHelpers.export(exports, "showAlert", ()=>showAlert);
+const hideAlert = ()=>{
+    const el = document.querySelector(".alert");
+    if (el) el.parentElement.removeChild(el);
+};
+const showAlert = (type, message)=>{
+    hideAlert();
+    const markup = `<div class="alert alert--${type}">${message}</div>`;
+    document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+    window.setTimeout(hideAlert, 5000);
+};
+
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}],"j7xLx":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -11418,13 +11457,15 @@ const updateSettings = async (data, type)=>{
     }
 };
 
-},{"./alert":"8F2M5","@parcel/transformer-js/src/esmodule-helpers.js":"fofuL","axios":"5vw73"}],"boZ94":[function(require,module,exports) {
+},{"axios":"5vw73","./alert":"8F2M5","@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}],"boZ94":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "bookTour", ()=>bookTour);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alert = require("./alert");
+var _catchAsync = require("../../utils/catchAsync");
+var _catchAsyncDefault = parcelHelpers.interopDefault(_catchAsync);
 const Stripe = require("a71affd4d8bc4891");
 const stripe = Stripe("pk_test_51NLLPnKrepZ3WoqW76asiNYghReUbsiBvf4dir5OH8ekuT5jvSmWp2iE3d9V2WqpGTjw1s2uDn7punMcwgub98b900lbUE5eQW");
 const bookTour = async (tourId)=>{
@@ -11434,13 +11475,14 @@ const bookTour = async (tourId)=>{
         console.log(session);
         //2) Create checkout form + charge CC using stripe'
         if (session) window.location.href = session.data.session.url;
+    // res.redirect(303, session.data.session.url);
     } catch (error) {
         console.log(error);
         (0, _alert.showAlert)("error", error);
     }
 };
 
-},{"axios":"5vw73","@parcel/transformer-js/src/esmodule-helpers.js":"fofuL","a71affd4d8bc4891":"bJf1Q","./alert":"8F2M5"}],"bJf1Q":[function(require,module,exports) {
+},{"axios":"5vw73","./alert":"8F2M5","a71affd4d8bc4891":"bJf1Q","@parcel/transformer-js/src/esmodule-helpers.js":"fofuL","../../utils/catchAsync":"amJ5c"}],"bJf1Q":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -63009,45 +63051,13 @@ function createWebhooks(platformFunctions) {
 }
 exports.createWebhooks = createWebhooks;
 
-},{"a8bd4d54faade086":"e5tIG"}],"kDEm8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "displayMap", ()=>displayMap);
-const displayMap = (locations)=>{
-    const map = L.map("map", {
-        center: [
-            51.505,
-            -0.09
-        ],
-        zoom: 13,
-        zoomControl: false,
-        dragging: false
-    });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    const points = [];
-    locations.forEach((loc)=>{
-        points.push([
-            loc.coordinates[1],
-            loc.coordinates[0]
-        ]);
-        L.marker([
-            loc.coordinates[1],
-            loc.coordinates[0]
-        ]).addTo(map).bindPopup(`<p>Day ${loc.day}: ${loc.description}</p>`, {
-            autoClose: false
-        }).on("mouseover", function(e) {
-            this.openPopup();
-        }).on("mouseout", function(e) {
-            this.closePopup();
-        });
-    });
-    const bounds = L.latLngBounds(points).pad(0.5);
-    map.fitBounds(bounds);
-    map.scrollWheelZoom.disable();
+},{"a8bd4d54faade086":"e5tIG"}],"amJ5c":[function(require,module,exports) {
+module.exports = (fn)=>{
+    return (req, res, next)=>{
+        fn(req, res, next).catch((err)=>next(err));
+    };
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"fofuL"}]},["fSlqf"], "fSlqf", "parcelRequire11c7")
+},{}]},["fSlqf"], "fSlqf", "parcelRequire11c7")
 
 //# sourceMappingURL=index.js.map
