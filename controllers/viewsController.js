@@ -54,7 +54,7 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
   res.status(200).render('overview', {
     title: 'My tours',
     tours
-  })
+  });
 });
 
 exports.updateUserData = catchAsync(async (req, res, next) => {
@@ -75,3 +75,12 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
     user: updatedUser
   });
 });
+
+exports.alerts = (req, res, next) => {
+  const { alert } = req.query.alert;
+  if (alert === 'booking') {
+    res.locals.aler =
+      "Your booking was successful! Please check your email for a confirmation. If your booking doesn't show up, please come back later";
+  }
+  next();
+};
