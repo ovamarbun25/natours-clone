@@ -5,6 +5,7 @@ import { displayMap } from './leaflet';
 import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
 import { bookTour } from './stripe';
+import { showAlert } from './alert';
 
 // const displayMap = require('../js/leaflet');
 
@@ -77,3 +78,6 @@ if (bookBtn) {
     bookTour(tourId);
   });
 }
+
+const alert = document.querySelector('body').dataset.alert;
+if (alert) showAlert('success', alert, 20);
